@@ -24,6 +24,7 @@ return {
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
+        -- LSP Attach
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc, mode)
@@ -31,12 +32,8 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
+          map('glk', vim.lsp.buf.hover, 'Hover')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
           map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
           -- Find references for the word under your cursor.
@@ -168,7 +165,26 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              ['ui.inlayhint.hints'] = {
+                compositeLiteralFields = true,
+                constantValues = true,
+                parameterNames = true,
+              },
+              -- hints = {
+              --   assignVariableTypes = true,
+              --   compositeLiteralFields = true,
+              --   compositeLiteralTypes = true,
+              --   constantValues = true,
+              --   functionTypeParameters = true,
+              --   parameterNames = true,
+              --   rangeVariableTypes = true,
+              -- },
+            },
+          },
+        },
         pyright = {},
         rust_analyzer = {},
         lua_ls = {
