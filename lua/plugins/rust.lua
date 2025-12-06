@@ -13,23 +13,23 @@ return {
           vim.keymap.set('n', '<leader>ca', function()
             vim.cmd.RustLsp 'codeAction'
           end, { desc = 'Rust: Code action', buffer = bufnr })
-          
+
           vim.keymap.set('n', '<leader>dr', function()
             vim.cmd.RustLsp 'debuggables'
           end, { desc = 'Rust: Debuggables', buffer = bufnr })
-          
+
           vim.keymap.set('n', '<leader>rr', function()
             vim.cmd.RustLsp 'runnables'
           end, { desc = 'Rust: Runnables', buffer = bufnr })
-          
+
           vim.keymap.set('n', '<leader>rt', function()
             vim.cmd.RustLsp 'testables'
           end, { desc = 'Rust: Testables', buffer = bufnr })
-          
+
           vim.keymap.set('n', '<leader>re', function()
             vim.cmd.RustLsp 'expandMacro'
           end, { desc = 'Rust: Expand macro', buffer = bufnr })
-          
+
           vim.keymap.set('n', 'K', function()
             vim.cmd.RustLsp { 'hover', 'actions' }
           end, { desc = 'Rust: Hover actions', buffer = bufnr })
@@ -77,7 +77,7 @@ return {
     event = { 'BufRead Cargo.toml' },
     opts = {
       completion = {
-        cmp = { enabled = true },
+        cmp = { enabled = false },
       },
       lsp = {
         enabled = true,
@@ -89,7 +89,7 @@ return {
     config = function(_, opts)
       local crates = require 'crates'
       crates.setup(opts)
-      
+
       -- Keymaps for Cargo.toml
       vim.api.nvim_create_autocmd('BufRead', {
         group = vim.api.nvim_create_augroup('CmpSourceCargo', { clear = true }),
