@@ -76,9 +76,7 @@ return {
     'saecki/crates.nvim',
     event = { 'BufRead Cargo.toml' },
     opts = {
-      completion = {
-        cmp = { enabled = false },
-      },
+      completion = {},
       lsp = {
         enabled = true,
         actions = true,
