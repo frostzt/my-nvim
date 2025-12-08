@@ -1,6 +1,5 @@
 -- Enhanced Rust development
 return {
-  -- Rustaceanvim - Enhanced Rust support
   {
     'mrcjkb/rustaceanvim',
     version = '^5',
