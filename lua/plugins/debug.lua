@@ -12,6 +12,7 @@ return {
 
     -- Debuggers
     'leoluz/nvim-dap-go',
+    'theHamsta/nvim-dap-virtual-text',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -75,6 +76,7 @@ return {
       handlers = {},
       ensure_installed = {
         'delve',
+        'codelldb',
       },
     }
 
@@ -124,5 +126,40 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- C++ debugging configuration
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = '${port}',
+      executable = {
+        command = vim.fn.stdpath 'data' .. '/mason/bin/codelldb',
+        args = { '--port', '${port}' },
+      },
+    }
+
+    dap.configurations.cpp = {
+      {
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+      {
+        name = 'Launch DNS Resolver',
+        type = 'codelldb',
+        request = 'launch',
+        program = '${workspaceFolder}/bin/dns_resolver',
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+      },
+    }
+
+    -- C also uses the same configuration
+    dap.configurations.c = dap.configurations.cpp
   end,
 }
