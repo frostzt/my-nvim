@@ -10,6 +10,13 @@ vim.o.showmode = true
 
 vim.opt.termguicolors = true
 
+-- method folding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+vim.opt.foldlevel = 99
+vim.opt.foldenable = false
+
 -- Sync clipboard between OS and Neovim.
 -- Schedule the setting after `UiEnter` because it can increase startup-time.
 -- Remove this option if you want your OS clipboard to remain independent.
