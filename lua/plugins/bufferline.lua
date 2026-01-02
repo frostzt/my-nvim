@@ -107,6 +107,92 @@ return {
         },
         sort_by = 'insert_after_current', -- 'insert_after_current' | 'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs'
       },
+      highlights = {
+        fill = {
+          bg = 'none',
+        },
+        background = {
+          bg = 'none',
+        },
+        tab = {
+          bg = 'none',
+        },
+        tab_selected = {
+          bg = 'none',
+        },
+        tab_separator = {
+          bg = 'none',
+        },
+        tab_separator_selected = {
+          bg = 'none',
+        },
+        tab_close = {
+          bg = 'none',
+        },
+        close_button = {
+          bg = 'none',
+        },
+        close_button_visible = {
+          bg = 'none',
+        },
+        close_button_selected = {
+          bg = 'none',
+        },
+        buffer_visible = {
+          bg = 'none',
+        },
+        buffer_selected = {
+          bg = 'none',
+        },
+        separator = {
+          bg = 'none',
+        },
+        separator_selected = {
+          bg = 'none',
+        },
+        separator_visible = {
+          bg = 'none',
+        },
+        offset_separator = {
+          bg = 'none',
+        },
+        duplicate_selected = {
+          bg = 'none',
+        },
+        duplicate_visible = {
+          bg = 'none',
+        },
+        duplicate = {
+          bg = 'none',
+        },
+        numbers = {
+          bg = 'none',
+        },
+        numbers_visible = {
+          bg = 'none',
+        },
+        numbers_selected = {
+          bg = 'none',
+        },
+        diagnostic = {
+          bg = 'none',
+        },
+        diagnostic_visible = {
+          bg = 'none',
+        },
+        diagnostic_selected = {
+          bg = 'none',
+        },
+        modified = {
+          bg = 'none',
+        },
+        modified_visible = {
+          bg = 'none',
+        },
+        modified_selected = {
+          bg = 'none',
+        },
+      },
     },
   },
 }

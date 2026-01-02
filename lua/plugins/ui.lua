@@ -10,8 +10,16 @@ return {
     config = function()
       require('onedark').setup {
         style = 'darker',
+        transparent = true,
       }
       require('onedark').load()
+
+      -- make sidebars transparent
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NvimTreeNormalNC', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NeoTreeNormal', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NeoTreeNormalNC', { bg = 'none' })
     end,
   },
 
