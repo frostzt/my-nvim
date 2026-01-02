@@ -5,16 +5,13 @@ return {
 
   -- Theme
   {
-    'folke/tokyonight.nvim',
-    priority = 1000,
+    'navarasu/onedark.nvim',
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
+      require('onedark').setup {
+        style = 'darker',
       }
-      vim.cmd.colorscheme 'retrobox'
+      require('onedark').load()
     end,
   },
 

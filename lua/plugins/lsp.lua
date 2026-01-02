@@ -24,6 +24,9 @@ return {
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
+        -- disable lsp log
+        vim.lsp.set_log_level 'off',
+
         -- LSP Attach
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)

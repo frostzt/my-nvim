@@ -152,7 +152,7 @@ return {
         name = 'Launch DNS Resolver',
         type = 'codelldb',
         request = 'launch',
-        program = '${workspaceFolder}/bin/dns_resolver',
+        program = '${workspaceFolder}/bin/dnspup',
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
         args = {},
