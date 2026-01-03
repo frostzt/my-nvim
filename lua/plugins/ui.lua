@@ -20,6 +20,15 @@ return {
       vim.api.nvim_set_hl(0, 'NvimTreeNormalNC', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeNormal', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeNormalNC', { bg = 'none' })
+      
+      -- Fix TabLine colors (used by bufferline) to be transparent
+      vim.api.nvim_set_hl(0, 'TabLine', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'none' })
+      
+      -- Fix bufferline colors to work with terminal theme
+      vim.api.nvim_set_hl(0, 'BufferLineOffsetSeparator', { bg = 'none', fg = 'none' })
+      vim.api.nvim_set_hl(0, 'BufferLineOffset', { bg = 'none', fg = 'none' })
     end,
   },
 

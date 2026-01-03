@@ -49,10 +49,41 @@ return {
       { '<leader>bse', '<cmd>BufferLineSortByExtension<cr>', desc = '[B]uffer [S]ort by [E]xtension' },
       { '<leader>bsd', '<cmd>BufferLineSortByDirectory<cr>', desc = '[B]uffer [S]ort by [D]irectory' },
     },
+    config = function(_, opts)
+      require('bufferline').setup(opts)
+      -- Force additional transparency after setup
+      vim.schedule(function()
+        vim.api.nvim_set_hl(0, 'BufferLineFill', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineBackground', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineTab', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineTabSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineBufferVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineBufferSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineSeparator', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineSeparatorVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineSeparatorSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineIndicatorSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineCloseButton', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineCloseButtonVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineCloseButtonSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineNumbers', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineNumbersVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineNumbersSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDuplicate', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDuplicateVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDuplicateSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineModified', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineModifiedVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineModifiedSelected', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDiagnostic', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDiagnosticVisible', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'BufferLineDiagnosticSelected', { bg = 'none' })
+      end)
+    end,
     opts = {
       options = {
         mode = 'buffers', -- set to "tabs" to only show tabpages instead
-        themable = true,
+        themable = false, -- Disable theme integration to use terminal colors
         numbers = 'ordinal', -- "none" | "ordinal" | "buffer_id" | "both"
         close_command = function(bufnum)
           require('bufferline').close_buffer(bufnum)
@@ -86,7 +117,8 @@ return {
             filetype = 'neo-tree',
             text = 'File Explorer',
             text_align = 'center', -- "left" | "center" | "right"
-            separator = true,
+            separator = false, -- Changed to false to test
+            highlight = 'Normal',
           },
         },
         color_icons = true,
@@ -109,88 +141,91 @@ return {
       },
       highlights = {
         fill = {
-          bg = 'none',
+          bg = 'NONE',
         },
         background = {
-          bg = 'none',
+          bg = 'NONE',
         },
         tab = {
-          bg = 'none',
+          bg = 'NONE',
         },
         tab_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         tab_separator = {
-          bg = 'none',
+          bg = 'NONE',
         },
         tab_separator_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         tab_close = {
-          bg = 'none',
+          bg = 'NONE',
         },
         close_button = {
-          bg = 'none',
+          bg = 'NONE',
         },
         close_button_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         close_button_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         buffer_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         buffer_selected = {
-          bg = 'none',
+          bg = 'NONE',
+          bold = true,
+          italic = false,
         },
         separator = {
-          bg = 'none',
+          bg = 'NONE',
         },
         separator_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         separator_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         offset_separator = {
-          bg = 'none',
+          bg = 'NONE',
+          fg = 'NONE',
         },
         duplicate_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         duplicate_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         duplicate = {
-          bg = 'none',
+          bg = 'NONE',
         },
         numbers = {
-          bg = 'none',
+          bg = 'NONE',
         },
         numbers_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         numbers_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         diagnostic = {
-          bg = 'none',
+          bg = 'NONE',
         },
         diagnostic_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         diagnostic_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
         modified = {
-          bg = 'none',
+          bg = 'NONE',
         },
         modified_visible = {
-          bg = 'none',
+          bg = 'NONE',
         },
         modified_selected = {
-          bg = 'none',
+          bg = 'NONE',
         },
       },
     },
