@@ -5,6 +5,10 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 vim.o.relativenumber = true
 
+-- enable .nvimrc and exrc files
+vim.o.exrc = true
+vim.o.secure = true
+
 vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.softtabstop = 2
