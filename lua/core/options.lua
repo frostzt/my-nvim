@@ -1,6 +1,10 @@
 -- [[ Core Options ]]
 vim.g.have_nerd_font = true
 
+-- For init.lua
+vim.cmd 'syntax enable'
+vim.cmd 'filetype plugin indent on'
+
 -- numbers and relative numbers
 vim.o.number = true
 vim.o.relativenumber = true
