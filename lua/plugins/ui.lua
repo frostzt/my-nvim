@@ -15,7 +15,7 @@ return {
       require('onedark').load()
 
       -- make sidebars transparent
-      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1a1a1a' }) -- Dark background for float windows so borders are visible
       vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NvimTreeNormalNC', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeNormal', { bg = 'none' })

@@ -58,13 +58,26 @@ return {
       end,
       desc = 'Debug: Set Breakpoint',
     },
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
       '<F7>',
       function()
         require('dapui').toggle()
       end,
       desc = 'Debug: See last session result.',
+    },
+    {
+      '<F4>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Stop/Terminate',
+    },
+    {
+      '<F6>',
+      function()
+        require('dap').run_last()
+      end,
+      desc = 'Debug: Run Last',
     },
   },
   config = function()
@@ -137,29 +150,101 @@ return {
       },
     }
 
+    -- Helper: split string into args table
+    local function split_args(str)
+      local args = {}
+      for arg in (str or ''):gmatch('%S+') do
+        table.insert(args, arg)
+      end
+      return args
+    end
+
     dap.configurations.cpp = {
       {
-        name = 'Launch file',
+        name = 'Launch',
         type = 'codelldb',
         request = 'launch',
         program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          return vim.fn.input('Executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        args = function()
+          return split_args(vim.fn.input('Arguments: ', ''))
         end,
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
       },
       {
-        name = 'Launch DNS Resolver',
+        name = 'Launch (stop on entry)',
         type = 'codelldb',
         request = 'launch',
-        program = '${workspaceFolder}/bin/dnspup',
+        program = function()
+          return vim.fn.input('Executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        args = function()
+          return split_args(vim.fn.input('Arguments: ', ''))
+        end,
         cwd = '${workspaceFolder}',
-        stopOnEntry = false,
-        args = {},
+        stopOnEntry = true,
+      },
+      {
+        name = 'Attach to process',
+        type = 'codelldb',
+        request = 'attach',
+        pid = require('dap.utils').pick_process,
       },
     }
 
-    -- C also uses the same configuration
     dap.configurations.c = dap.configurations.cpp
+
+    -- Load project-local debug config if it exists (.nvim-dap.lua)
+    -- This file can define/override dap.configurations for this project
+    local local_config = vim.fn.getcwd() .. '/.nvim-dap.lua'
+    if vim.fn.filereadable(local_config) == 1 then
+      dofile(local_config)
+    end
+
+    -- Memory view helper functions for C/C++ debugging
+    local function read_memory()
+      local session = dap.session()
+      if not session then
+        vim.notify('No active debug session', vim.log.levels.WARN)
+        return
+      end
+      local addr = vim.fn.input 'Memory address (hex): 0x'
+      if addr == '' then
+        return
+      end
+      local count = vim.fn.input 'Bytes to read [64]: '
+      count = count == '' and '64' or count
+      -- Use LLDB command via repl
+      dap.repl.execute('memory read -c ' .. count .. ' 0x' .. addr)
+      dap.repl.open()
+    end
+
+    local function examine_memory()
+      local session = dap.session()
+      if not session then
+        vim.notify('No active debug session', vim.log.levels.WARN)
+        return
+      end
+      local expr = vim.fn.input 'Expression (variable/address): '
+      if expr == '' then
+        return
+      end
+      local format = vim.fn.input 'Format [x=hex, d=decimal, s=string, i=instruction]: '
+      format = format == '' and 'x' or format
+      local count = vim.fn.input 'Count [16]: '
+      count = count == '' and '16' or count
+      -- Use LLDB examine command
+      dap.repl.execute('x/' .. count .. format .. ' ' .. expr)
+      dap.repl.open()
+    end
+
+    -- Memory view keymaps (only active during debug sessions)
+    vim.keymap.set('n', '<leader>dm', read_memory, { desc = 'Debug: Read [M]emory' })
+    vim.keymap.set('n', '<leader>dx', examine_memory, { desc = 'Debug: E[x]amine memory' })
+    vim.keymap.set('n', '<leader>dr', function()
+      dap.repl.open()
+    end, { desc = 'Debug: Open [R]EPL' })
   end,
 }

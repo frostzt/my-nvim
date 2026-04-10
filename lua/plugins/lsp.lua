@@ -23,9 +23,23 @@ return {
       'saghen/blink.cmp',
     },
     config = function()
+      -- Configure LSP hover and signature help windows to have borders
+      vim.lsp.config('*', {
+        handlers = {
+          ['textDocument/hover'] = function(err, result, ctx, config)
+            config = vim.tbl_extend('force', config or {}, { border = 'rounded' })
+            vim.lsp.handlers.hover(err, result, ctx, config)
+          end,
+          ['textDocument/signatureHelp'] = function(err, result, ctx, config)
+            config = vim.tbl_extend('force', config or {}, { border = 'rounded' })
+            vim.lsp.handlers.signature_help(err, result, ctx, config)
+          end,
+        },
+      })
+
       vim.api.nvim_create_autocmd('LspAttach', {
         -- disable lsp log
-        vim.lsp.set_log_level 'off',
+        -- vim.lsp.set_log_level 'off',
 
         -- LSP Attach
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -126,7 +140,7 @@ return {
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
-        float = { border = 'rounded', source = 'if_many' },
+        float = { border = 'rounded', source = true },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
           text = {
@@ -137,8 +151,9 @@ return {
           },
         } or {},
         virtual_text = {
-          source = 'if_many',
+          source = true,
           spacing = 2,
+          prefix = '●',
           format = function(diagnostic)
             local diagnostic_message = {
               [vim.diagnostic.severity.ERROR] = diagnostic.message,

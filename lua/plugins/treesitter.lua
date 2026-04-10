@@ -2,17 +2,17 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs',
-    opts = {
-      ensure_installed = { 'go', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
+    -- The main branch manages only parser installation.
+    -- Highlighting is handled natively by Neovim via vim.treesitter.
+    -- No setup() call needed — plugin/ files handle auto-detection.
+    config = function()
+      require('nvim-treesitter.install').install {
+        'go', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
+        'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
+      }
+    end,
   },
   {
     'nvim-treesitter/nvim-treesitter-context',

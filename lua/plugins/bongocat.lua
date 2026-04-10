@@ -5,7 +5,7 @@ return {
     { '<leader>bc', '<cmd>BongoCat<cr>', desc = 'Toggle Bongo Cat' },
   },
   opts = {
-    auto_start = true,
+    auto_start = false,
     window = {
       position = 'bottom-right',
     },

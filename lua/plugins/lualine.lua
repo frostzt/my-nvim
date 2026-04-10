@@ -63,6 +63,23 @@ local function is_document_filetype()
   return filetype and WORDCOUNT_FILETYPES[filetype] or false
 end
 
+-- Workspace component (safe loading)
+local function get_workspace_status()
+  local ok, ws_lualine = pcall(require, 'workspaces.integrations.lualine')
+  if ok then
+    return ws_lualine.get_status()
+  end
+  return ''
+end
+
+local function has_workspace()
+  local ok, ws_lualine = pcall(require, 'workspaces.integrations.lualine')
+  if ok then
+    return ws_lualine.has_workspaces()
+  end
+  return false
+end
+
 -- Main configuration
 return {
   'nvim-lualine/lualine.nvim',
@@ -83,6 +100,11 @@ return {
         'lsp_status',
       },
       lualine_c = {
+        {
+          get_workspace_status,
+          cond = has_workspace,
+          color = { fg = '#7aa2f7' },
+        },
         {
           'filename',
           file_status = true,
